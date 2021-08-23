@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build"
   },
   "keywords": [],
   "author": "",
@@ -25,4 +26,5 @@
     "stripe": "^8.104.0",
     "uniqueid": "^1.0.0"
   }
+ 
 }
