@@ -28,6 +28,11 @@ app.use(bodyParser.json({ limit: "2mb" }));
 app.use(cors());
 
 // route
+app.get("/", (req,res) => {
+  res.send("Welcome!");
+});
+
+
 readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
 
 // port
