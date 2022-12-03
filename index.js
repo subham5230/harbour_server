@@ -29,7 +29,7 @@ app.use(cors());
 
 // route
 app.get("/", (req,res) => {
-  res.send("Welcome!");
+  res.send("Harbour Ecommerce API Service.");
 });
 
 
