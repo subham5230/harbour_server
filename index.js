@@ -25,10 +25,15 @@ mongoose
 // middlewares
 app.use(morgan("dev"));
 app.use(bodyParser.json({ limit: "2mb" }));
-app.use(cors({
-  origin: 'https://harbour.subhammohanty.me',
-  optionsSuccessStatus: 200
-}));
+// app.use(cors({
+//   origin: 'https://harbour.subhammohanty.me',
+//   optionsSuccessStatus: 200
+// }));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // route
 app.get("/", (req,res) => {
