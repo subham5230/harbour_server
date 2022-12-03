@@ -25,8 +25,10 @@ mongoose
 // middlewares
 app.use(morgan("dev"));
 app.use(bodyParser.json({ limit: "2mb" }));
-// app.use(cors());
-app.options('*', cors())
+app.use(cors({
+  origin: 'https://harbour.subhammohanty.me',
+  optionsSuccessStatus: 200
+}));
 
 // route
 app.get("/", (req,res) => {
