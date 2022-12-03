@@ -25,7 +25,9 @@ mongoose
 // middlewares
 app.use(morgan("dev"));
 app.use(bodyParser.json({ limit: "2mb" }));
-app.use(cors());
+app.use(cors({
+  origin: "https://harbour-ecomm.netlify.app"
+}));
 
 // route
 app.get("/", (req,res) => {
