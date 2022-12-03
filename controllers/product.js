@@ -3,6 +3,7 @@ const User = require("../models/user");
 const slugify = require("slugify");
 
 exports.create = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     console.log(req.body);
     req.body.slug = slugify(req.body.title);
@@ -18,6 +19,7 @@ exports.create = async (req, res) => {
 };
 
 exports.listAll = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   let products = await Product.find({})
     .limit(parseInt(req.params.count))
     .populate("category")
@@ -28,6 +30,7 @@ exports.listAll = async (req, res) => {
 };
 
 exports.remove = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     const deleted = await Product.findOneAndRemove({
       slug: req.params.slug,
@@ -40,6 +43,7 @@ exports.remove = async (req, res) => {
 };
 
 exports.read = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   const product = await Product.findOne({ slug: req.params.slug })
     .populate("category")
     .populate("subs")
@@ -48,6 +52,7 @@ exports.read = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     if (req.body.title) {
       req.body.slug = slugify(req.body.title);
@@ -87,6 +92,7 @@ exports.update = async (req, res) => {
 
 // WITH PAGINATION
 exports.list = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   // console.table(req.body);
   try {
     // createdAt/updatedAt, desc/asc, 3
@@ -109,11 +115,13 @@ exports.list = async (req, res) => {
 };
 
 exports.productsCount = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   let total = await Product.find({}).estimatedDocumentCount().exec();
   res.json(total);
 };
 
 exports.productStar = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   const product = await Product.findById(req.params.productId).exec();
   const user = await User.findOne({ email: req.user.email }).exec();
   const { star } = req.body;
@@ -150,6 +158,7 @@ exports.productStar = async (req, res) => {
 };
 
 exports.listRelated = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   const product = await Product.findById(req.params.productId).exec();
 
   const related = await Product.find({
@@ -168,6 +177,7 @@ exports.listRelated = async (req, res) => {
 // SERACH / FILTER
 
 const handleQuery = async (req, res, query) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   const products = await Product.find({ $text: { $search: query } })
     .populate("category", "_id name")
     .populate("subs", "_id name")
@@ -178,6 +188,7 @@ const handleQuery = async (req, res, query) => {
 };
 
 const handlePrice = async (req, res, price) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     let products = await Product.find({
       price: {
@@ -197,6 +208,7 @@ const handlePrice = async (req, res, price) => {
 };
 
 const handleCategory = async (req, res, category) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     let products = await Product.find({ category })
       .populate("category", "_id name")
@@ -211,6 +223,7 @@ const handleCategory = async (req, res, category) => {
 };
 
 const handleStar = (req, res, stars) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   Product.aggregate([
     {
       $project: {
@@ -238,6 +251,7 @@ const handleStar = (req, res, stars) => {
 };
 
 const handleSub = async (req, res, sub) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   const products = await Product.find({ subs: sub })
     .populate("category", "_id name")
     .populate("subs", "_id name")
@@ -248,6 +262,7 @@ const handleSub = async (req, res, sub) => {
 };
 
 const handleShipping = async (req, res, shipping) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   const products = await Product.find({ shipping })
     .populate("category", "_id name")
     .populate("subs", "_id name")
@@ -258,6 +273,7 @@ const handleShipping = async (req, res, shipping) => {
 };
 
 const handleColor = async (req, res, color) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   const products = await Product.find({ color })
     .populate("category", "_id name")
     .populate("subs", "_id name")
@@ -268,6 +284,7 @@ const handleColor = async (req, res, color) => {
 };
 
 const handleBrand = async (req, res, brand) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   const products = await Product.find({ brand })
     .populate("category", "_id name")
     .populate("subs", "_id name")
@@ -278,6 +295,7 @@ const handleBrand = async (req, res, brand) => {
 };
 
 exports.searchFilters = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   const {
     query,
     price,
